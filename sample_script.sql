@@ -2,8 +2,7 @@ USE test_db_workers;
 #SHOW TABLES;
 
 #ввод тестовых данных
-insert into working_period values ('4', '1-2', '2019-09-14T18:00:00', '2019-09-14T21:00:00'),
-    ('4', '1-1', '2019-09-13T08:00:00', '2019-09-13T10:00:00');
+
 /*insert into project values 
 	('1', 'test project 1', '1'), 
 	('2', 'test project 2', '2');
