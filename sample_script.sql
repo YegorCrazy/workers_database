@@ -2,7 +2,8 @@ USE test_db_workers;
 #SHOW TABLES;
 
 #ввод тестовых данных
-
+insert into working_period values ('4', '1-2', '2019-09-14T18:00:00', '2019-09-14T21:00:00'),
+    ('4', '1-1', '2019-09-13T08:00:00', '2019-09-13T10:00:00');
 /*insert into project values 
 	('1', 'test project 1', '1'), 
 	('2', 'test project 2', '2');
@@ -26,7 +27,8 @@ insert into project_stage values
 insert into worker values 
 	('1', 'Vasya', 'Vasilyev', '1'),
 	('2', 'Stepan', 'Stepanov', '2'),
-    ('3', 'Fedor', 'Fedorov', '3');
+    ('3', 'Fedor', 'Fedorov', '3'),
+    ('4', 'Vadim', 'Vadimov', '4');
 
 insert into payment values 
 	('1-1', '100', '1', NULL),
@@ -44,12 +46,15 @@ insert into working_period values
     ('2', '2-1', '2019-09-13T08:00:00', '2019-09-13T10:00:00'),
     ('2', '2-2', '2019-09-14T18:00:00', '2019-09-14T19:00:00'),
     ('3', '2-1', '2019-09-14T20:00:00', '2019-09-14T21:00:00'),
-    ('3', '2-2', '2019-09-13T18:00:00', '2019-09-13T21:00:00');
+    ('3', '2-2', '2019-09-13T18:00:00', '2019-09-13T21:00:00'),
+    ('4', '1-2', '2019-09-14T18:00:00', '2019-09-14T21:00:00'),
+    ('4', '1-1', '2019-09-13T08:00:00', '2019-09-13T10:00:00');
     
 insert into salary values 
 	('1', '300', '2'),
     ('2', '55', '2'),
-	('3', '6', '1');*/
+	('3', '6', '1'),
+    ('4', '25', '1');*/
 
 #поиск типа оплаты проекта по имени
 
@@ -107,6 +112,14 @@ insert into salary values
 	) as sum, '$' from stage
         inner join working_period on working_period.stage_id = stage.id and working_period.worker_id = '2'
         where stage.completed = '1' and stage.finish_date between '2019-09-01' and '2019-10-01';*/
+        
+#подсчет зарплаты работника за 4 часа
+
+/*select sum(timestampdiff(hour, working_period.start, working_period.finish) * salary.size * currency.ratio / 4.0) as sum, '$' from worker
+	inner join working_period on working_period.worker_id = worker.id
+    inner join salary on salary.worker_id = worker.id
+    inner join currency on salary.currency_id = currency.id
+    where worker.id = '4' and working_period.start between '2019-09-01' and '2019-10-01';*/
 
 #удаление всех таблиц
 
