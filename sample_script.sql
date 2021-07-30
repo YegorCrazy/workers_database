@@ -98,32 +98,15 @@ insert into salary values
     where worker.id = '1';*/
     
 #подсчет зарплаты работника за этап
-
-/*select sum(salary.size * currency.ratio) as sum, '$'  from worker as w
-	inner join salary on salary.worker_id = w.id
-    inner join currency on currency.id = salary.currency_id
-    where w.id = '2' and exists (
-		select * from stage
-        inner join working_period on working_period.stage_id = stage.id and working_period.worker_id = '2'
-        where stage.completed = '1' and stage.finish_date between '2019-09-01' and '2019-10-01'
-	);*/
     
-/*select sum(salary.size * currency.ratio) as sum, '$' from worker
-	inner join salary on salary.worker_id = worker.id
-    inner join currency on currency.id = salary.currency_id
-    inner join working_period on working_period.worker_id = worker.id
-    inner join stage on working_period.stage_id = stage.id
-    where worker.id = '2' and stage.completed = '1' and stage.finish_date between '2019-09-01' and '2019-10-01';*/
-    
-select sum(salary.size * currency.ratio * count(stage.id in (
-	select * from stage
+/*select count(distinct stage.id) * (
+	select salary.size * currency.ratio from worker
+		inner join salary on salary.worker_id = worker.id
+		inner join currency on currency.id = salary.currency_id
+		where worker.id = '2'
+	) as sum, '$' from stage
         inner join working_period on working_period.stage_id = stage.id and working_period.worker_id = '2'
-        where stage.completed = '1' and stage.finish_date between '2019-09-01' and '2019-10-01'
-        group by stage.id))
-	) as sum, '$' from worker
-	inner join salary on salary.worker_id = worker.id
-    inner join currency on currency.id = salary.currency_id
-    where worker.id = '2';
+        where stage.completed = '1' and stage.finish_date between '2019-09-01' and '2019-10-01';*/
 
 #удаление всех таблиц
 
